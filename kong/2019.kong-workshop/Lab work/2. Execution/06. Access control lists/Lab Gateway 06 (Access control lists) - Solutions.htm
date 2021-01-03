@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Lab Gateway 06 (Access control lists) - Kong Labs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="https://training.apim.eu/favicon.png">
+  <link rel="stylesheet" href="/css/style.min.a71c6f6ee0528d09894ceafb0c5e48079976456747e6712511899d6fb657ca2f.css">
+</head>
+
+<body class='page page-default-single'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+    <ul>
+      <li class="menu-item-lab environment">
+        <a href="/env">
+          <span>Lab Environment</span>
+        </a>
+      </li>
+      <li class="menu-item-labs">
+        <a href="/labs">
+          <span>Labs</span>
+        </a>
+      </li>
+      <li class="menu-item-🔗 documentation">
+        <a href="https://docs.konghq.com/enterprise/">
+          <span>🔗 Documentation</span>
+        </a>
+      </li>
+      <li class="menu-item-🔗 plugins hub">
+        <a href="https://docs.konghq.com/hub/">
+          <span>🔗 Plugins Hub</span>
+        </a>
+      </li>
+      <li class="menu-item-🔗 github">
+        <a href="https://github.com/kong">
+          <span>🔗 Github</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="wrapper">
+    <div class='header'>
+      <div class="container">
+        <div class="logo">
+          <a href="https://training.apim.eu/"><img alt="Logo" src="/images/kong.png" /></a>
+        </div>
+        <div class="logo-mobile">
+          <a href="https://training.apim.eu/"><img alt="Logo" src="/images/kong.png" /></a>
+        </div>
+        <div id="main-menu" class="main-menu">
+          <ul>
+            <li class="menu-item-lab environment">
+              <a href="/env">
+                <span>Lab Environment</span>
+              </a>
+            </li>
+            <li class="menu-item-labs">
+              <a href="/labs">
+                <span>Labs</span>
+              </a>
+            </li>
+            <li class="menu-item-🔗 documentation">
+              <a href="https://docs.konghq.com/enterprise/">
+                <span>🔗 Documentation</span>
+              </a>
+            </li>
+            <li class="menu-item-🔗 plugins hub">
+              <a href="https://docs.konghq.com/hub/">
+                <span>🔗 Plugins Hub</span>
+              </a>
+            </li>
+            <li class="menu-item-🔗 github">
+              <a href="https://github.com/kong">
+                <span>🔗 Github</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="container pt-2 pt-md-6 pb-3 pb-md-6">
+      <div class="row">
+        <div class="col-12 col-md-3 mb-3">
+          <div class="sidebar">
+            <div class="docs-menu">
+              <h4>Solutions</h4>
+              <ul>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_01/">Lab Gateway 01 (Routes and Services)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_02/">Lab Gateway 02 (Caching)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_03/">Lab Gateway 03 (Key Authentication)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_04/">Lab Gateway 04 (Rate Limiting)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_05/">Lab Gateway 05 (Rate limiting and free
+                    access)</a>
+                </li>
+                <li class="active ">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_06/">Lab Gateway 06 (Access control lists)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_07/">Lab Gateway 07 (Basic authentication)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_08/">Lab Gateway 08 (Mixing
+                    Authentications)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_09/">Lab Gateway 09 (OpenID Connect)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_10/">Lab Gateway 10 (Loadbalacing /
+                    Upstreams)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_11/">Lab Gateway 11 (Manipulating headers)</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-9">
+          <h1 class="title">Lab Gateway 06 (Access control lists)</h1>
+          <div class="content ">
+            <h2 id="lab-solution">Lab Solution</h2>
+            <p>Add route</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http post localhost:8001/services/httpbin/routes name<span style="color:#f92672">=</span>acl-route paths:<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;[&#34;/acl&#34;]&#39;</span>
+HTTP/1.1 <span style="color:#ae81ff">201</span> Created
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Origin: http://localhost:8002
+Connection: keep-alive
+Content-Length: <span style="color:#ae81ff">394</span>
+Content-Type: application/json; charset<span style="color:#f92672">=</span>utf-8
+Date: Mon, <span style="color:#ae81ff">09</span> Sep <span style="color:#ae81ff">2019</span> 05:45:14 GMT
+Server: kong/0.36-2-enterprise-edition
+Vary: Origin
+X-Kong-Admin-Request-ID: QcePV6rTp0yB6XxpiSAnHU1IUAlOKzKi
+<span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;created_at&#34;</span>: 1568007913,
+<span style="color:#e6db74">&#34;destinations&#34;</span>: null,
+<span style="color:#e6db74">&#34;hosts&#34;</span>: null,
+<span style="color:#e6db74">&#34;https_redirect_status_code&#34;</span>: 426,
+<span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;05ba4bb1-bb11-4e27-80e4-e1dd7c007ba4&#34;</span>,
+<span style="color:#e6db74">&#34;methods&#34;</span>: null,
+<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;acl-route&#34;</span>,
+<span style="color:#e6db74">&#34;paths&#34;</span>: <span style="color:#f92672">[</span>
+<span style="color:#e6db74">&#34;/acl&#34;</span>
+<span style="color:#f92672">]</span>,
+<span style="color:#e6db74">&#34;preserve_host&#34;</span>: false,
+<span style="color:#e6db74">&#34;protocols&#34;</span>: <span style="color:#f92672">[</span>
+<span style="color:#e6db74">&#34;http&#34;</span>,
+<span style="color:#e6db74">&#34;https&#34;</span>
+<span style="color:#f92672">]</span>,
+<span style="color:#e6db74">&#34;regex_priority&#34;</span>: 0,
+<span style="color:#e6db74">&#34;service&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;c6bafb59-cbf3-43d4-ad29-93d0be3f2eb8&#34;</span>
+<span style="color:#f92672">}</span>,
+<span style="color:#e6db74">&#34;snis&#34;</span>: null,
+<span style="color:#e6db74">&#34;sources&#34;</span>: null,
+<span style="color:#e6db74">&#34;strip_path&#34;</span>: true,
+<span style="color:#e6db74">&#34;tags&#34;</span>: null,
+<span style="color:#e6db74">&#34;updated_at&#34;</span>: <span style="color:#ae81ff">1568007913</span>
+<span style="color:#f92672">}</span>
+</code></pre>
+            </div>
+            <p>Add key-auth plugin</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http post localhost:8001/routes/acl-route/plugins name<span style="color:#f92672">=</span>key-auth
+</code></pre>
+            </div>
+            <p>Add consumers and credentials</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http post localhost:8001/consumers username<span style="color:#f92672">=</span>lab06.consumer1
+http post localhost:8001/consumers username<span style="color:#f92672">=</span>lab06.consumer2
+http post localhost:8001/consumers username<span style="color:#f92672">=</span>lab06.consumer3
+http post localhost:8001/consumers username<span style="color:#f92672">=</span>lab06.consumer4
+</code></pre>
+            </div>
+            <p>Add consumers to 2 groups - lab06.group1 and lab06.group2</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http post localhost:8001/consumers/lab06.consumer1/acls <span style="color:#e6db74">&#34;group=lab06.group1&#34;</span>
+http post localhost:8001/consumers/lab06.consumer3/acls <span style="color:#e6db74">&#34;group=lab06.group1&#34;</span>
+http post localhost:8001/consumers/lab06.consumer2/acls <span style="color:#e6db74">&#34;group=lab06.group2&#34;</span>
+http post localhost:8001/consumers/lab06.consumer4/acls <span style="color:#e6db74">&#34;group=lab06.group2&#34;</span>
+</code></pre>
+            </div>
+            <p>Now, let&rsquo;s create a key credential for the consumer</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http post localhost:8001/consumers/lab06.consumer1/key-auth key<span style="color:#f92672">=</span>lab06.consumer1.key
+http post localhost:8001/consumers/lab06.consumer2/key-auth key<span style="color:#f92672">=</span>lab06.consumer2.ke
+http post localhost:8001/consumers/lab06.consumer3/key-auth key<span style="color:#f92672">=</span>lab06.consumer3.key
+http post localhost:8001/consumers/lab06.consumer4/key-auth key<span style="color:#f92672">=</span>lab06.consumer4.key
+</code></pre>
+            </div>
+            <p>Restrict access to lab06.group1</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http POST localhost:8001/routes/acl-route/plugins name<span style="color:#f92672">=</span>acl config.whitelist<span style="color:#f92672">=</span>lab06.group1     config.hide_groups_header<span style="color:#f92672">=</span>true -f
+HTTP/1.1 <span style="color:#ae81ff">201</span> Created
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Origin: http://localhost:8002
+Connection: keep-alive
+Content-Length: <span style="color:#ae81ff">323</span>
+Content-Type: application/json; charset<span style="color:#f92672">=</span>utf-8
+Date: Mon, <span style="color:#ae81ff">09</span> Sep <span style="color:#ae81ff">2019</span> 05:57:45 GMT
+Server: kong/0.36-2-enterprise-edition
+Vary: Origin
+X-Kong-Admin-Request-ID: fKopRQR7z0t1D8PTGScbPvK7MlQzygnS
+<span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;config&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;blacklist&#34;</span>: null,
+<span style="color:#e6db74">&#34;hide_groups_header&#34;</span>: true,
+<span style="color:#e6db74">&#34;whitelist&#34;</span>: <span style="color:#f92672">[</span>
+<span style="color:#e6db74">&#34;lab06.group1&#34;</span>
+<span style="color:#f92672">]</span>
+<span style="color:#f92672">}</span>,
+<span style="color:#e6db74">&#34;consumer&#34;</span>: null,
+<span style="color:#e6db74">&#34;created_at&#34;</span>: 1568008665,
+<span style="color:#e6db74">&#34;enabled&#34;</span>: true,
+<span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;048af332-5b27-4dfb-a1b2-7444b0ba6534&#34;</span>,
+<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;acl&#34;</span>,
+<span style="color:#e6db74">&#34;protocols&#34;</span>: <span style="color:#f92672">[</span>
+<span style="color:#e6db74">&#34;http&#34;</span>,
+<span style="color:#e6db74">&#34;https&#34;</span>
+<span style="color:#f92672">]</span>,
+<span style="color:#e6db74">&#34;route&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;05ba4bb1-bb11-4e27-80e4-e1dd7c007ba4&#34;</span>
+<span style="color:#f92672">}</span>,
+<span style="color:#e6db74">&#34;run_on&#34;</span>: <span style="color:#e6db74">&#34;first&#34;</span>,
+<span style="color:#e6db74">&#34;service&#34;</span>: null,
+<span style="color:#e6db74">&#34;tags&#34;</span>: null
+<span style="color:#f92672">}</span>
+</code></pre>
+            </div>
+            <p>Verify ACL for both groups</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http localhost:8000/acl apikey:lab06.consumer2.key
+HTTP/1.1 <span style="color:#ae81ff">403</span> Forbidden
+Connection: keep-alive
+Content-Length: <span style="color:#ae81ff">45</span>
+Content-Type: application/json; charset<span style="color:#f92672">=</span>utf-8
+Date: Mon, <span style="color:#ae81ff">09</span> Sep <span style="color:#ae81ff">2019</span> 06:25:21 GMT
+Server: kong/0.36-2-enterprise-edition
+<span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;You cannot consume this service&#34;</span>
+<span style="color:#f92672">}</span>
+</code></pre>
+            </div>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http localhost:8000/acl apikey:lab06.consumer3.key
+HTTP/1.1 <span style="color:#ae81ff">200</span> OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Encoding: gzip
+Content-Length: <span style="color:#ae81ff">312</span>
+Content-Type: application/json
+Date: Mon, <span style="color:#ae81ff">09</span> Sep <span style="color:#ae81ff">2019</span> 06:26:36 GMT
+Referrer-Policy: no-referrer-when-downgrade
+Server: nginx
+Via: kong/0.36-2-enterprise-edition
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-Kong-Proxy-Latency: <span style="color:#ae81ff">114</span>
+X-Kong-Upstream-Latency: <span style="color:#ae81ff">185</span>
+X-XSS-Protection: 1; mode<span style="color:#f92672">=</span>block
+<span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;args&#34;</span>: <span style="color:#f92672">{}</span>,
+<span style="color:#e6db74">&#34;data&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+<span style="color:#e6db74">&#34;files&#34;</span>: <span style="color:#f92672">{}</span>,
+<span style="color:#e6db74">&#34;form&#34;</span>: <span style="color:#f92672">{}</span>,
+<span style="color:#e6db74">&#34;headers&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;Accept&#34;</span>: <span style="color:#e6db74">&#34;*/*&#34;</span>,
+<span style="color:#e6db74">&#34;Accept-Encoding&#34;</span>: <span style="color:#e6db74">&#34;gzip, deflate&#34;</span>,
+<span style="color:#e6db74">&#34;Apikey&#34;</span>: <span style="color:#e6db74">&#34;lab06.consumer3.key&#34;</span>,
+<span style="color:#e6db74">&#34;Host&#34;</span>: <span style="color:#e6db74">&#34;httpbin.org&#34;</span>,
+<span style="color:#e6db74">&#34;User-Agent&#34;</span>: <span style="color:#e6db74">&#34;HTTPie/1.0.2&#34;</span>,
+<span style="color:#e6db74">&#34;X-Consumer-Id&#34;</span>: <span style="color:#e6db74">&#34;b1907b58-11f4-4d1d-85e0-b5039dabcaf9&#34;</span>,
+<span style="color:#e6db74">&#34;X-Consumer-Username&#34;</span>: <span style="color:#e6db74">&#34;lab06.consumer3&#34;</span>,
+<span style="color:#e6db74">&#34;X-Forwarded-Host&#34;</span>: <span style="color:#e6db74">&#34;localhost&#34;</span>
+<span style="color:#f92672">}</span>,
+<span style="color:#e6db74">&#34;json&#34;</span>: null,
+<span style="color:#e6db74">&#34;method&#34;</span>: <span style="color:#e6db74">&#34;GET&#34;</span>,
+<span style="color:#e6db74">&#34;origin&#34;</span>: <span style="color:#e6db74">&#34;172.18.0.1, 91.164.50.66, 172.18.0.1&#34;</span>,
+<span style="color:#e6db74">&#34;url&#34;</span>: <span style="color:#e6db74">&#34;https://localhost/anything&#34;</span>
+<span style="color:#f92672">}</span>
+</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="sub-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="sub-footer-inner">
+            <ul>
+              <li class="zerostatic"><a href="https://konghq.com">&copy; Kong, Inc.</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"
+    src="/js/scripts.min.eaf147370baecdd07c022597db631f99cab1c9cd6479de586f30327a568d6a0f.js"></script>
+</body>
+
+</html>
