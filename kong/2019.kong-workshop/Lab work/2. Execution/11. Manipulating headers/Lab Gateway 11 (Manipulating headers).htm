@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Lab Gateway 11 (Manipulating headers) - Kong Labs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="https://training.apim.eu/favicon.png">
+  <link rel="stylesheet" href="/css/style.min.a71c6f6ee0528d09894ceafb0c5e48079976456747e6712511899d6fb657ca2f.css">
+</head>
+
+<body class='page page-default-single'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+    <ul>
+      <li class="menu-item-lab environment">
+        <a href="/env">
+          <span>Lab Environment</span>
+        </a>
+      </li>
+      <li class="menu-item-labs">
+        <a href="/labs">
+          <span>Labs</span>
+        </a>
+      </li>
+      <li class="menu-item-🔗 documentation">
+        <a href="https://docs.konghq.com/enterprise/">
+          <span>🔗 Documentation</span>
+        </a>
+      </li>
+      <li class="menu-item-🔗 plugins hub">
+        <a href="https://docs.konghq.com/hub/">
+          <span>🔗 Plugins Hub</span>
+        </a>
+      </li>
+      <li class="menu-item-🔗 github">
+        <a href="https://github.com/kong">
+          <span>🔗 Github</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="wrapper">
+    <div class='header'>
+      <div class="container">
+        <div class="logo">
+          <a href="https://training.apim.eu/"><img alt="Logo" src="/images/kong.png" /></a>
+        </div>
+        <div class="logo-mobile">
+          <a href="https://training.apim.eu/"><img alt="Logo" src="/images/kong.png" /></a>
+        </div>
+        <div id="main-menu" class="main-menu">
+          <ul>
+            <li class="menu-item-lab environment">
+              <a href="/env">
+                <span>Lab Environment</span>
+              </a>
+            </li>
+            <li class="menu-item-labs">
+              <a href="/labs">
+                <span>Labs</span>
+              </a>
+            </li>
+            <li class="menu-item-🔗 documentation">
+              <a href="https://docs.konghq.com/enterprise/">
+                <span>🔗 Documentation</span>
+              </a>
+            </li>
+            <li class="menu-item-🔗 plugins hub">
+              <a href="https://docs.konghq.com/hub/">
+                <span>🔗 Plugins Hub</span>
+              </a>
+            </li>
+            <li class="menu-item-🔗 github">
+              <a href="https://github.com/kong">
+                <span>🔗 Github</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="container pt-2 pt-md-6 pb-3 pb-md-6">
+      <div class="row">
+        <div class="col-12 col-md-3 mb-3">
+          <div class="sidebar">
+
+            <div class="docs-menu">
+              <h4>Labs</h4>
+              <ul>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_gw_001_services_routes/">Lab Gateway 01 (Routes and
+                    Services)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_gw_002_caching/">Lab Gateway 02 (Caching)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_gw_003_key_auth/">Lab Gateway 03 (Key Authentication)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_gw_004_rate_limiting/">Lab Gateway 04 (Rate Limiting)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_gw_005_rate_limiting_with_free_access/">Lab Gateway 05
+                    (Rate limiting and free access)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_gw_006_acl/">Lab Gateway 06 (Access control lists)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_gw_007_basic_auth/">Lab Gateway 07 (Basic
+                    authentication)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_gw_008_mixing_authentications/">Lab Gateway 08 (Mixing
+                    Authentications)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_gw_009_oidc_keycloak/">Lab Gateway 09 (OpenID Connect)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_gw_010_loadbalancing/">Lab Gateway 10 (Loadbalacing /
+                    Upstreams)</a>
+                </li>
+                <li class="active ">
+                  <a href="https://training.apim.eu/labs/lab_gw_011_manipulating_headers/">Lab Gateway 11 (Manipulating
+                    headers)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_manage_001_workspaces_rbac/">Lab Management 1 (Workspaces
+                    &amp; RBAC)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_manage_002_rbac_users/">Lab Management 2 (Roles and
+                    Users)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_manage_003_vitals/">Lab Management 3 (Vitals)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_manage_004_prometheus/">Lab Management 4 (Prometheus /
+                    Grafana)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_manage_005_syslog/">Lab Management 5 (Logging)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_portal_001_authentication/">Lab Portal 1
+                    (Authentication)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_portal_002_openapi_specs/">Lab Portal 2 (OpenAPI /
+                    Swagger)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/labs/lab_portal_003_theme_customization/">Lab Portal 3 (Themes)</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-9">
+          <h1 class="title">Lab Gateway 11 (Manipulating headers)</h1>
+          <div class="content ">
+            <p>Add a new header to the response.</p>
+            <ol>
+              <li>Create a new route based on the service from lab 1 with the path <code>/transform</code></li>
+              <li>Add the <code>response-transformer</code> plugin to the route you have created.</li>
+              <li>Add a new header called “my-own-header” with the value “cool” to the response.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="sub-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="sub-footer-inner">
+            <ul>
+              <li class="zerostatic"><a href="https://konghq.com">&copy; Kong, Inc.</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"
+    src="/js/scripts.min.eaf147370baecdd07c022597db631f99cab1c9cd6479de586f30327a568d6a0f.js"></script>
+</body>
+
+</html>
