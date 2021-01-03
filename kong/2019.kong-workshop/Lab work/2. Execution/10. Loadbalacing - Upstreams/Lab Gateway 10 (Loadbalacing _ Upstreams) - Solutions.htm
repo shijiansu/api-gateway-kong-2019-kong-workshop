@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Lab Gateway 10 (Loadbalacing / Upstreams) - Kong Labs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="https://training.apim.eu/favicon.png">
+  <link rel="stylesheet" href="/css/style.min.a71c6f6ee0528d09894ceafb0c5e48079976456747e6712511899d6fb657ca2f.css">
+</head>
+
+<body class='page page-default-single'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+    <ul>
+      <li class="menu-item-lab environment">
+        <a href="/env">
+          <span>Lab Environment</span>
+        </a>
+      </li>
+      <li class="menu-item-labs">
+        <a href="/labs">
+          <span>Labs</span>
+        </a>
+      </li>
+      <li class="menu-item-🔗 documentation">
+        <a href="https://docs.konghq.com/enterprise/">
+          <span>🔗 Documentation</span>
+        </a>
+      </li>
+      <li class="menu-item-🔗 plugins hub">
+        <a href="https://docs.konghq.com/hub/">
+          <span>🔗 Plugins Hub</span>
+        </a>
+      </li>
+      <li class="menu-item-🔗 github">
+        <a href="https://github.com/kong">
+          <span>🔗 Github</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="wrapper">
+    <div class='header'>
+      <div class="container">
+        <div class="logo">
+          <a href="https://training.apim.eu/"><img alt="Logo" src="/images/kong.png" /></a>
+        </div>
+        <div class="logo-mobile">
+          <a href="https://training.apim.eu/"><img alt="Logo" src="/images/kong.png" /></a>
+        </div>
+        <div id="main-menu" class="main-menu">
+          <ul>
+            <li class="menu-item-lab environment">
+              <a href="/env">
+                <span>Lab Environment</span>
+              </a>
+            </li>
+            <li class="menu-item-labs">
+              <a href="/labs">
+                <span>Labs</span>
+              </a>
+            </li>
+            <li class="menu-item-🔗 documentation">
+              <a href="https://docs.konghq.com/enterprise/">
+                <span>🔗 Documentation</span>
+              </a>
+            </li>
+            <li class="menu-item-🔗 plugins hub">
+              <a href="https://docs.konghq.com/hub/">
+                <span>🔗 Plugins Hub</span>
+              </a>
+            </li>
+            <li class="menu-item-🔗 github">
+              <a href="https://github.com/kong">
+                <span>🔗 Github</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="container pt-2 pt-md-6 pb-3 pb-md-6">
+      <div class="row">
+        <div class="col-12 col-md-3 mb-3">
+          <div class="sidebar">
+            <div class="docs-menu">
+              <h4>Solutions</h4>
+              <ul>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_01/">Lab Gateway 01 (Routes and Services)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_02/">Lab Gateway 02 (Caching)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_03/">Lab Gateway 03 (Key Authentication)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_04/">Lab Gateway 04 (Rate Limiting)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_05/">Lab Gateway 05 (Rate limiting and free
+                    access)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_06/">Lab Gateway 06 (Access control lists)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_07/">Lab Gateway 07 (Basic authentication)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_08/">Lab Gateway 08 (Mixing
+                    Authentications)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_09/">Lab Gateway 09 (OpenID Connect)</a>
+                </li>
+                <li class="active ">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_10/">Lab Gateway 10 (Loadbalacing /
+                    Upstreams)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_11/">Lab Gateway 11 (Manipulating headers)</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-9">
+          <h1 class="title">Lab Gateway 10 (Loadbalacing / Upstreams)</h1>
+          <div class="content ">
+            <h2 id="lab-solution">Lab Solution</h2>
+            <p>Create a new upstream with the default settings</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http -f post localhost:8001/upstreams name<span style="color:#f92672">=</span>my-upstream
+HTTP/1.1 <span style="color:#ae81ff">201</span> Created
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Origin: http://localhost:8002
+Connection: keep-alive
+Content-Length: <span style="color:#ae81ff">820</span>
+Content-Type: application/json; charset<span style="color:#f92672">=</span>utf-8
+Date: Mon, <span style="color:#ae81ff">09</span> Sep <span style="color:#ae81ff">2019</span> 09:00:03 GMT
+Server: kong/0.36-2-enterprise-edition
+Vary: Origin
+X-Kong-Admin-Request-ID: 8XOPGnfkKfeUQBQLdpGLJFdfZDThPZlw
+<span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;created_at&#34;</span>: 1568019603,
+<span style="color:#e6db74">&#34;hash_fallback&#34;</span>: <span style="color:#e6db74">&#34;none&#34;</span>,
+<span style="color:#e6db74">&#34;hash_fallback_header&#34;</span>: null,
+<span style="color:#e6db74">&#34;hash_on&#34;</span>: <span style="color:#e6db74">&#34;none&#34;</span>,
+<span style="color:#e6db74">&#34;hash_on_cookie&#34;</span>: null,
+<span style="color:#e6db74">&#34;hash_on_cookie_path&#34;</span>: <span style="color:#e6db74">&#34;/&#34;</span>,
+<span style="color:#e6db74">&#34;hash_on_header&#34;</span>: null,
+<span style="color:#e6db74">&#34;healthchecks&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;active&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;concurrency&#34;</span>: 10,
+<span style="color:#e6db74">&#34;healthy&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;http_statuses&#34;</span>: <span style="color:#f92672">[</span>
+200,
+<span style="color:#ae81ff">302</span>
+<span style="color:#f92672">]</span>,
+<span style="color:#e6db74">&#34;interval&#34;</span>: 0,
+<span style="color:#e6db74">&#34;successes&#34;</span>: <span style="color:#ae81ff">0</span>
+<span style="color:#f92672">}</span>,
+<span style="color:#e6db74">&#34;http_path&#34;</span>: <span style="color:#e6db74">&#34;/&#34;</span>,
+<span style="color:#e6db74">&#34;https_sni&#34;</span>: null,
+<span style="color:#e6db74">&#34;https_verify_certificate&#34;</span>: true,
+<span style="color:#e6db74">&#34;timeout&#34;</span>: 1,
+<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;http&#34;</span>,
+<span style="color:#e6db74">&#34;unhealthy&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;http_failures&#34;</span>: 0,
+<span style="color:#e6db74">&#34;http_statuses&#34;</span>: <span style="color:#f92672">[</span>
+429,
+404,
+500,
+501,
+502,
+503,
+504,
+<span style="color:#ae81ff">505</span>
+<span style="color:#f92672">]</span>,
+<span style="color:#e6db74">&#34;interval&#34;</span>: 0,
+<span style="color:#e6db74">&#34;tcp_failures&#34;</span>: 0,
+<span style="color:#e6db74">&#34;timeouts&#34;</span>: <span style="color:#ae81ff">0</span>
+<span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>,
+<span style="color:#e6db74">&#34;passive&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;healthy&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;http_statuses&#34;</span>: <span style="color:#f92672">[</span>
+200,
+201,
+202,
+203,
+204,
+205,
+206,
+207,
+208,
+226,
+300,
+301,
+302,
+303,
+304,
+305,
+306,
+307,
+<span style="color:#ae81ff">308</span>
+<span style="color:#f92672">]</span>,
+<span style="color:#e6db74">&#34;successes&#34;</span>: <span style="color:#ae81ff">0</span>
+<span style="color:#f92672">}</span>,
+<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;http&#34;</span>,
+<span style="color:#e6db74">&#34;unhealthy&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;http_failures&#34;</span>: 0,
+<span style="color:#e6db74">&#34;http_statuses&#34;</span>: <span style="color:#f92672">[</span>
+429,
+500,
+<span style="color:#ae81ff">503</span>
+<span style="color:#f92672">]</span>,
+<span style="color:#e6db74">&#34;tcp_failures&#34;</span>: 0,
+<span style="color:#e6db74">&#34;timeouts&#34;</span>: <span style="color:#ae81ff">0</span>
+<span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>,
+<span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;802c4f55-e97c-4bba-9a91-aad4b08e7577&#34;</span>,
+<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;my-upstream&#34;</span>,
+<span style="color:#e6db74">&#34;slots&#34;</span>: 10000,
+<span style="color:#e6db74">&#34;tags&#34;</span>: null
+<span style="color:#f92672">}</span>
+</code></pre>
+            </div>
+            <p>add 2 targets (here we suse httpbin.org and httpbin.apim.eu on port 80)</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http -f post  localhost:8001/upstreams/my-upstream/targets target<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;httpbin.org:80&#34;</span>
+HTTP/1.1 <span style="color:#ae81ff">201</span> Created
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Origin: http://localhost:8002
+Connection: keep-alive
+Content-Length: <span style="color:#ae81ff">169</span>
+Content-Type: application/json; charset<span style="color:#f92672">=</span>utf-8
+Date: Mon, <span style="color:#ae81ff">09</span> Sep <span style="color:#ae81ff">2019</span> 11:32:55 GMT
+Server: kong/0.36-2-enterprise-edition
+Vary: Origin
+X-Kong-Admin-Request-ID: CUQOrVtNfbKgGkZatHQErttGURoOuYK3
+<span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;created_at&#34;</span>: 1568028775.604,
+<span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;4ea1a16e-43d6-4804-b2f8-5cc08a82aae2&#34;</span>,
+<span style="color:#e6db74">&#34;target&#34;</span>: <span style="color:#e6db74">&#34;httpbin.org:80&#34;</span>,
+<span style="color:#e6db74">&#34;upstream&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;802c4f55-e97c-4bba-9a91-aad4b08e7577&#34;</span>
+<span style="color:#f92672">}</span>,
+<span style="color:#e6db74">&#34;weight&#34;</span>: <span style="color:#ae81ff">100</span>
+<span style="color:#f92672">}</span>
+http -f post  localhost:8001/upstreams/my-upstream/targets target<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;httpbin.apim.eu:80&#34;</span>
+HTTP/1.1 <span style="color:#ae81ff">201</span> Created
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Origin: http://localhost:8002
+Connection: keep-alive
+Content-Length: <span style="color:#ae81ff">173</span>
+Content-Type: application/json; charset<span style="color:#f92672">=</span>utf-8
+Date: Mon, <span style="color:#ae81ff">09</span> Sep <span style="color:#ae81ff">2019</span> 11:34:50 GMT
+Server: kong/0.36-2-enterprise-edition
+Vary: Origin
+X-Kong-Admin-Request-ID: SCa8UmzHEGuxWyWqtPYT5iVWuXOoc6UW
+<span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;created_at&#34;</span>: 1568028890.613,
+<span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;b55cbeaa-db12-4ab3-af60-47bde69be872&#34;</span>,
+<span style="color:#e6db74">&#34;target&#34;</span>: <span style="color:#e6db74">&#34;httpbin.apim.eu:80&#34;</span>,
+<span style="color:#e6db74">&#34;upstream&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;802c4f55-e97c-4bba-9a91-aad4b08e7577&#34;</span>
+<span style="color:#f92672">}</span>,
+<span style="color:#e6db74">&#34;weight&#34;</span>: <span style="color:#ae81ff">100</span>
+<span style="color:#f92672">}</span>
+</code></pre>
+            </div>
+            <p>Create a service on the upstream/anything. Note: the hostname in the url-parameter is the name you
+              provided with your upstream</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http post localhost:8001/services name<span style="color:#f92672">=</span>loadbalancedUpstream url<span style="color:#f92672">=</span>http://my-upstream/anything
+HTTP/1.1 <span style="color:#ae81ff">201</span> Created
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Origin: http://localhost:8002
+Connection: keep-alive
+Content-Length: <span style="color:#ae81ff">283</span>
+Content-Type: application/json; charset<span style="color:#f92672">=</span>utf-8
+Date: Mon, <span style="color:#ae81ff">09</span> Sep <span style="color:#ae81ff">2019</span> 11:41:08 GMT
+Server: kong/0.36-2-enterprise-edition
+Vary: Origin
+X-Kong-Admin-Request-ID: vCd5jAcWvPhLbEl1EAaGXJMAqrxiAJnP
+<span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;connect_timeout&#34;</span>: 60000,
+<span style="color:#e6db74">&#34;created_at&#34;</span>: 1568029268,
+<span style="color:#e6db74">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;my-upstream&#34;</span>,
+<span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;df113c25-d540-4435-8fbb-b141f8e72f86&#34;</span>,
+<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;loadbalancedUpstream&#34;</span>,
+<span style="color:#e6db74">&#34;path&#34;</span>: <span style="color:#e6db74">&#34;/anything&#34;</span>,
+<span style="color:#e6db74">&#34;port&#34;</span>: 80,
+<span style="color:#e6db74">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;http&#34;</span>,
+<span style="color:#e6db74">&#34;read_timeout&#34;</span>: 60000,
+<span style="color:#e6db74">&#34;retries&#34;</span>: 5,
+<span style="color:#e6db74">&#34;tags&#34;</span>: null,
+<span style="color:#e6db74">&#34;updated_at&#34;</span>: 1568029268,
+<span style="color:#e6db74">&#34;write_timeout&#34;</span>: <span style="color:#ae81ff">60000</span>
+<span style="color:#f92672">}</span>
+</code></pre>
+            </div>
+            <p>Create a route to expose the service</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http post localhost:8001/services/loadbalancedUpstream/routes name<span style="color:#f92672">=</span>upstream-route paths:<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;[&#34;/upstream&#34;]&#39;</span>
+HTTP/1.1 <span style="color:#ae81ff">201</span> Created
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Origin: http://localhost:8002
+Connection: keep-alive
+Content-Length: <span style="color:#ae81ff">404</span>
+Content-Type: application/json; charset<span style="color:#f92672">=</span>utf-8
+Date: Mon, <span style="color:#ae81ff">09</span> Sep <span style="color:#ae81ff">2019</span> 11:44:15 GMT
+Server: kong/0.36-2-enterprise-edition
+Vary: Origin
+X-Kong-Admin-Request-ID: kbh1vK38Kvl83lWQfY7RThFvOJTA2U2p
+<span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;created_at&#34;</span>: 1568029455,
+<span style="color:#e6db74">&#34;destinations&#34;</span>: null,
+<span style="color:#e6db74">&#34;hosts&#34;</span>: null,
+<span style="color:#e6db74">&#34;https_redirect_status_code&#34;</span>: 426,
+<span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;1aa940c1-65f8-4246-add3-e507f8dcd7c5&#34;</span>,
+<span style="color:#e6db74">&#34;methods&#34;</span>: null,
+<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;upstream-route&#34;</span>,
+<span style="color:#e6db74">&#34;paths&#34;</span>: <span style="color:#f92672">[</span>
+<span style="color:#e6db74">&#34;/upstream&#34;</span>
+<span style="color:#f92672">]</span>,
+<span style="color:#e6db74">&#34;preserve_host&#34;</span>: false,
+<span style="color:#e6db74">&#34;protocols&#34;</span>: <span style="color:#f92672">[</span>
+<span style="color:#e6db74">&#34;http&#34;</span>,
+<span style="color:#e6db74">&#34;https&#34;</span>
+<span style="color:#f92672">]</span>,
+<span style="color:#e6db74">&#34;regex_priority&#34;</span>: 0,
+<span style="color:#e6db74">&#34;service&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;df113c25-d540-4435-8fbb-b141f8e72f86&#34;</span>
+<span style="color:#f92672">}</span>,
+<span style="color:#e6db74">&#34;snis&#34;</span>: null,
+<span style="color:#e6db74">&#34;sources&#34;</span>: null,
+<span style="color:#e6db74">&#34;strip_path&#34;</span>: true,
+<span style="color:#e6db74">&#34;tags&#34;</span>: null,
+<span style="color:#e6db74">&#34;updated_at&#34;</span>: <span style="color:#ae81ff">1568029455</span>
+<span style="color:#f92672">}</span>
+</code></pre>
+            </div>
+            <p><strong>Verify</strong> par running the request command several, you should see 2 different hosts
+              (Httpbin.org &amp; httpbin.apim.eu)</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http localhost:8000/upstream
+HTTP/1.1 <span style="color:#ae81ff">200</span> OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Encoding: gzip
+Content-Length: <span style="color:#ae81ff">243</span>
+Content-Type: application/json
+Date: Mon, <span style="color:#ae81ff">09</span> Sep <span style="color:#ae81ff">2019</span> 11:45:50 GMT
+Referrer-Policy: no-referrer-when-downgrade
+Server: nginx
+Via: kong/0.36-2-enterprise-edition
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-Kong-Proxy-Latency: <span style="color:#ae81ff">10</span>
+X-Kong-Upstream-Latency: <span style="color:#ae81ff">188</span>
+X-XSS-Protection: 1; mode<span style="color:#f92672">=</span>block
+<span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;args&#34;</span>: <span style="color:#f92672">{}</span>,
+<span style="color:#e6db74">&#34;data&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+<span style="color:#e6db74">&#34;files&#34;</span>: <span style="color:#f92672">{}</span>,
+<span style="color:#e6db74">&#34;form&#34;</span>: <span style="color:#f92672">{}</span>,
+<span style="color:#e6db74">&#34;headers&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;Accept&#34;</span>: <span style="color:#e6db74">&#34;*/*&#34;</span>,
+<span style="color:#e6db74">&#34;Accept-Encoding&#34;</span>: <span style="color:#e6db74">&#34;gzip, deflate&#34;</span>,
+<span style="color:#e6db74">&#34;Host&#34;</span>: <span style="color:#e6db74">&#34;httpbin.org&#34;</span>,
+<span style="color:#e6db74">&#34;User-Agent&#34;</span>: <span style="color:#e6db74">&#34;HTTPie/1.0.2&#34;</span>,
+<span style="color:#e6db74">&#34;X-Forwarded-Host&#34;</span>: <span style="color:#e6db74">&#34;localhost&#34;</span>
+<span style="color:#f92672">}</span>,
+<span style="color:#e6db74">&#34;json&#34;</span>: null,
+<span style="color:#e6db74">&#34;method&#34;</span>: <span style="color:#e6db74">&#34;GET&#34;</span>,
+<span style="color:#e6db74">&#34;origin&#34;</span>: <span style="color:#e6db74">&#34;172.18.0.1, 91.164.50.66, 172.18.0.1&#34;</span>,
+<span style="color:#e6db74">&#34;url&#34;</span>: <span style="color:#e6db74">&#34;https://localhost/anything&#34;</span>
+<span style="color:#f92672">}</span>
+http localhost:8000/upstream
+HTTP/1.1 <span style="color:#ae81ff">200</span> OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Encoding: gzip
+Content-Type: application/json
+Date: Mon, <span style="color:#ae81ff">09</span> Sep <span style="color:#ae81ff">2019</span> 11:47:35 GMT
+Server: nginx/1.17.3
+Strict-Transport-Security: max-age<span style="color:#f92672">=</span>31536000; includeSubDomains
+Transfer-Encoding: chunked
+Vary: Accept-Encoding
+Via: kong/0.36-2-enterprise-edition
+X-Kong-Proxy-Latency: <span style="color:#ae81ff">1</span>
+X-Kong-Upstream-Latency: <span style="color:#ae81ff">81</span>
+<span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;args&#34;</span>: <span style="color:#f92672">{}</span>,
+<span style="color:#e6db74">&#34;data&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+<span style="color:#e6db74">&#34;files&#34;</span>: <span style="color:#f92672">{}</span>,
+<span style="color:#e6db74">&#34;form&#34;</span>: <span style="color:#f92672">{}</span>,
+<span style="color:#e6db74">&#34;headers&#34;</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">&#34;Accept&#34;</span>: <span style="color:#e6db74">&#34;*/*&#34;</span>,
+<span style="color:#e6db74">&#34;Accept-Encoding&#34;</span>: <span style="color:#e6db74">&#34;gzip, deflate&#34;</span>,
+<span style="color:#e6db74">&#34;Connection&#34;</span>: <span style="color:#e6db74">&#34;close&#34;</span>,
+<span style="color:#e6db74">&#34;Host&#34;</span>: <span style="color:#e6db74">&#34;httpbin.apim.eu&#34;</span>,
+<span style="color:#e6db74">&#34;User-Agent&#34;</span>: <span style="color:#e6db74">&#34;HTTPie/1.0.2&#34;</span>,
+<span style="color:#e6db74">&#34;X-Forwarded-Host&#34;</span>: <span style="color:#e6db74">&#34;localhost&#34;</span>
+<span style="color:#f92672">}</span>,
+<span style="color:#e6db74">&#34;json&#34;</span>: null,
+<span style="color:#e6db74">&#34;method&#34;</span>: <span style="color:#e6db74">&#34;GET&#34;</span>,
+<span style="color:#e6db74">&#34;origin&#34;</span>: <span style="color:#e6db74">&#34;172.18.0.1, 91.164.50.66&#34;</span>,
+<span style="color:#e6db74">&#34;url&#34;</span>: <span style="color:#e6db74">&#34;https://localhost/anything&#34;</span>
+<span style="color:#f92672">}</span>
+</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="sub-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="sub-footer-inner">
+            <ul>
+              <li class="zerostatic"><a href="https://konghq.com">&copy; Kong, Inc.</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"
+    src="/js/scripts.min.eaf147370baecdd07c022597db631f99cab1c9cd6479de586f30327a568d6a0f.js"></script>
+</body>
+
+</html>
