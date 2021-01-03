@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://training.apim.eu/solutions/lab_gateway_01/ -->
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <style id="stndz-style"></style>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Lab Gateway 01 (Routes and Services) - Kong Labs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="https://training.apim.eu/favicon.png">
+  <link rel="stylesheet"
+    href="./01. Lab Gateway 01 (Routes and Services)_files/style.min.a71c6f6ee0528d09894ceafb0c5e48079976456747e6712511899d6fb657ca2f.css">
+</head>
+
+<body class="page page-default-single" data-new-gr-c-s-check-loaded="14.984.0" data-gr-ext-installed="">
+  <div id="main-menu-mobile" class="main-menu-mobile">
+    <ul>
+      <li class="menu-item-lab environment">
+        <a href="https://training.apim.eu/env">
+          <span>Lab Environment</span>
+        </a>
+      </li>
+      <li class="menu-item-labs">
+        <a href="https://training.apim.eu/labs">
+          <span>Labs</span>
+        </a>
+      </li>
+      <li class="menu-item-🔗 documentation">
+        <a href="https://docs.konghq.com/enterprise/">
+          <span>🔗 Documentation</span>
+        </a>
+      </li>
+      <li class="menu-item-🔗 plugins hub">
+        <a href="https://docs.konghq.com/hub/">
+          <span>🔗 Plugins Hub</span>
+        </a>
+      </li>
+      <li class="menu-item-🔗 github">
+        <a href="https://github.com/kong">
+          <span>🔗 Github</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="wrapper">
+    <div class="header">
+      <div class="container">
+        <div class="logo">
+          <a href="https://training.apim.eu/"><img alt="Logo"
+              src="./01. Lab Gateway 01 (Routes and Services)_files/kong.png"></a>
+        </div>
+        <div class="logo-mobile">
+          <a href="https://training.apim.eu/"><img alt="Logo"
+              src="./01. Lab Gateway 01 (Routes and Services)_files/kong.png"></a>
+        </div>
+        <div id="main-menu" class="main-menu">
+          <ul>
+            <li class="menu-item-lab environment">
+              <a href="https://training.apim.eu/env">
+                <span>Lab Environment</span>
+              </a>
+            </li>
+            <li class="menu-item-labs">
+              <a href="https://training.apim.eu/labs">
+                <span>Labs</span>
+              </a>
+            </li>
+            <li class="menu-item-🔗 documentation">
+              <a href="https://docs.konghq.com/enterprise/">
+                <span>🔗 Documentation</span>
+              </a>
+            </li>
+            <li class="menu-item-🔗 plugins hub">
+              <a href="https://docs.konghq.com/hub/">
+                <span>🔗 Plugins Hub</span>
+              </a>
+            </li>
+            <li class="menu-item-🔗 github">
+              <a href="https://github.com/kong">
+                <span>🔗 Github</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="container pt-2 pt-md-6 pb-3 pb-md-6">
+      <div class="row">
+        <div class="col-12 col-md-3 mb-3">
+          <div class="sidebar">
+            <div class="docs-menu">
+              <h4>Solutions</h4>
+              <ul>
+                <li class="active ">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_01/">Lab Gateway 01 (Routes and Services)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_02/">Lab Gateway 02 (Caching)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_03/">Lab Gateway 03 (Key Authentication)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_04/">Lab Gateway 04 (Rate Limiting)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_05/">Lab Gateway 05 (Rate limiting and free
+                    access)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_06/">Lab Gateway 06 (Access control lists)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_07/">Lab Gateway 07 (Basic authentication)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_08/">Lab Gateway 08 (Mixing
+                    Authentications)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_09/">Lab Gateway 09 (OpenID Connect)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_10/">Lab Gateway 10 (Loadbalacing /
+                    Upstreams)</a>
+                </li>
+                <li class="">
+                  <a href="https://training.apim.eu/solutions/lab_gateway_11/">Lab Gateway 11 (Manipulating headers)</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-9">
+          <h1 class="title">Lab Gateway 01 (Routes and Services)</h1>
+          <div class="content ">
+            <h2 id="lab-solution">Lab Solution</h2>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http POST localhost:8001/services name<span style="color:#f92672">=</span>httpbin url<span style="color:#f92672">=</span>http://httpbin.org/anything
+</code></pre>
+            </div>
+            <p>Check Service is created</p>
+            <p>You can get a list of all the services configured on Kong by issuing the command:</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http GET localhost:8001/services
+</code></pre>
+            </div>
+            <p>Add a route for the service that you created by running this command.</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http POST localhost:8001/services/httpbin/routes name<span style="color:#f92672">=</span>anything_route paths:<span style="color:#f92672">=</span><span style="color:#e6db74">'["/anything"]'</span>
+</code></pre>
+            </div>
+            <p>Let’s check the route has been created</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http GET localhost:8001/routes
+</code></pre>
+            </div>
+            <h3 id="verify">Verify</h3>
+            <p>Issue the following request to verify that Kong is properly forwarding requests to your Service. Note
+              that by default Kong handles proxy requests on port 8000:</p>
+            <div class="highlight">
+              <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; http GET localhost:8000/anything
+HTTP/1.1 <span style="color:#ae81ff">200</span> OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Encoding: gzip
+Content-Length: <span style="color:#ae81ff">243</span>
+Content-Type: application/json
+Date: Tue, <span style="color:#ae81ff">03</span> Sep <span style="color:#ae81ff">2019</span> 00:55:45 GMT
+Referrer-Policy: no-referrer-when-downgrade
+Server: nginx
+Via: kong/0.36-2-enterprise-edition
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-Kong-Proxy-Latency: <span style="color:#ae81ff">1</span>
+X-Kong-Upstream-Latency: <span style="color:#ae81ff">1170</span>
+X-XSS-Protection: 1; mode<span style="color:#f92672">=</span>block
+<span style="color:#f92672">{</span>
+<span style="color:#e6db74">"args"</span>: <span style="color:#f92672">{}</span>,
+<span style="color:#e6db74">"data"</span>: <span style="color:#e6db74">""</span>,
+<span style="color:#e6db74">"files"</span>: <span style="color:#f92672">{}</span>,
+<span style="color:#e6db74">"form"</span>: <span style="color:#f92672">{}</span>,
+<span style="color:#e6db74">"headers"</span>: <span style="color:#f92672">{</span>
+<span style="color:#e6db74">"Accept"</span>: <span style="color:#e6db74">"*/*"</span>,
+<span style="color:#e6db74">"Accept-Encoding"</span>: <span style="color:#e6db74">"gzip, deflate"</span>,
+<span style="color:#e6db74">"Host"</span>: <span style="color:#e6db74">"httpbin.org"</span>,
+<span style="color:#e6db74">"User-Agent"</span>: <span style="color:#e6db74">"HTTPie/1.0.2"</span>,
+<span style="color:#e6db74">"X-Forwarded-Host"</span>: <span style="color:#e6db74">"localhost"</span>
+<span style="color:#f92672">}</span>,
+<span style="color:#e6db74">"json"</span>: null,
+<span style="color:#e6db74">"method"</span>: <span style="color:#e6db74">"GET"</span>,
+<span style="color:#e6db74">"origin"</span>: <span style="color:#e6db74">"172.18.0.1, 137.147.16.174, 172.18.0.1"</span>,
+<span style="color:#e6db74">"url"</span>: <span style="color:#e6db74">"https://localhost/anything"</span>
+<span style="color:#f92672">}</span>
+</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sub-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="sub-footer-inner">
+            <ul>
+              <li class="zerostatic"><a href="https://konghq.com/">© Kong, Inc.</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"
+    src="./01. Lab Gateway 01 (Routes and Services)_files/scripts.min.eaf147370baecdd07c022597db631f99cab1c9cd6479de586f30327a568d6a0f.js"></script>
+</body>
+
+</html>
