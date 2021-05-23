@@ -1,12 +1,10 @@
-# README
-
-## Links
+# Links
 
 - Workshop Labs: https://training.apim.eu/
 - Workshop Solution: https://training.apim.eu/solutions
 - Kong Plugins: https://docs.konghq.com/hub/
 
-## Lab Environment
+# Lab Environment
 
 - <https://training.apim.eu/env/docker/>
 - Enterprise 1.3.0
