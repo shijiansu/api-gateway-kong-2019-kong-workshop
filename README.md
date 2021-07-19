@@ -1,14 +1,14 @@
-# kong-workshop-2019
+# api-gateway-kong-2019-kong-workshop
 
 ![](https://img.shields.io/badge/language-xxx-blue)
 ![](https://img.shields.io/badge/technology-xxx,%20xxx-blue)
 ![](https://img.shields.io/badge/development%20year-2021-orange)
 
-![](https://img.shields.io/github/languages/top/shijiansu/kong-workshop-2019)
-![](https://img.shields.io/github/languages/count/shijiansu/kong-workshop-2019)
-![](https://img.shields.io/github/languages/code-size/shijiansu/kong-workshop-2019)
-![](https://img.shields.io/github/repo-size/shijiansu/kong-workshop-2019)
-![](https://img.shields.io/github/last-commit/shijiansu/kong-workshop-2019?color=red)
+![](https://img.shields.io/github/languages/top/shijiansu/api-gateway-kong-2019-kong-workshop)
+![](https://img.shields.io/github/languages/count/shijiansu/api-gateway-kong-2019-kong-workshop)
+![](https://img.shields.io/github/languages/code-size/shijiansu/api-gateway-kong-2019-kong-workshop)
+![](https://img.shields.io/github/repo-size/shijiansu/api-gateway-kong-2019-kong-workshop)
+![](https://img.shields.io/github/last-commit/shijiansu/api-gateway-kong-2019-kong-workshop?color=red)
 
 ## Outline
 
